@@ -7,6 +7,7 @@ from services.grid_inspection_service import get_grid_inspection_data
 from services.prediction_service import predict as predict_crop
 from services.gemini_service import ask_ai
 from schemas import PredictionInput as PredictionRequest
+import traceback
 
 print(__file__)
 print(os.getcwd())
