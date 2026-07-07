@@ -1,6 +1,6 @@
 import pandas as pd
 
-DATA_PATH = "https://agriguardai.blob.core.windows.net/data/merged_for_mapping_final.csv?sp=r&st=2026-07-07T20:51:25Z&se=2026-07-08T05:06:25Z&spr=https&sv=2026-02-06&sr=b&sig=..."
+DATA_PATH = "https://agriguardai.blob.core.windows.net/data/merged_for_mapping_final.csv?sp=r&st=2026-07-07T22:28:05Z&se=2028-12-31T07:43:05Z&spr=https&sv=2026-02-06&sr=b&sig=Wg5rYEAC0thQIal5GahStNb7Oensk7sLOV1%2FqjOC0H0%3D"
 
 
 df = pd.read_csv(
