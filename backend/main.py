@@ -23,7 +23,12 @@ def home():
 
 @app.get("/dashboard")
 def dashboard():
-    return get_dashboard_data()
+    import traceback
+    try:
+        return get_dashboard_data()
+    except Exception:
+        traceback.print_exc()
+        raise
 
 
 @app.get("/test")
