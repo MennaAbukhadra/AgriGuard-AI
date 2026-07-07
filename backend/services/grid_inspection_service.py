@@ -1,8 +1,10 @@
+from pathlib import Path
 import pandas as pd
 
-GRID_DATA_PATH = "merged_for_mapping_final.csv"
-df = pd.read_csv(GRID_DATA_PATH)
+BASE_DIR = Path(__file__).resolve().parents[1]
+GRID_DATA_PATH = BASE_DIR / "data" / "merged_for_mapping_final.csv"
 
+df = pd.read_csv(GRID_DATA_PATH)
 def get_grid_list():
     return sorted(df["Grid_ID"].astype(str).unique().tolist())
 

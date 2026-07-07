@@ -1,7 +1,9 @@
 import pandas as pd
 
-RISK_MAP_PATH = "merged_for_mapping_final.csv"
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parents[1]
+RISK_MAP_PATH = BASE_DIR / "data" / "merged_for_mapping_final.csv"
 def get_risk_map_data():
     print(RISK_MAP_PATH)
     df = pd.read_csv(RISK_MAP_PATH)

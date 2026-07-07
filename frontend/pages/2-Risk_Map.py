@@ -3,14 +3,15 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
+from config import API_BASE_URL
+
 st.set_page_config(
     page_title="AgriGuard Risk Map",
     page_icon="Map",
     layout="wide"
 )
 
-API_URL = "https://agriguard-api-hahqevhdc3eab3c8.uaenorth-01.azurewebsites.net/risk-map"
-
+API_URL = f"{API_BASE_URL}/risk-map"
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');

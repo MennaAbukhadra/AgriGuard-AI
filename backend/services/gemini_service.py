@@ -3,15 +3,21 @@ import os
 from google import genai
 import xgboost as xgb
 import pandas as pd
+from pathlib import Path
 
 load_dotenv()
-
+        
 client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
 )
 
 model = xgb.XGBClassifier()
-model.load_model("saved_models/xgb_model.json")
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+MODEL_PATH = BASE_DIR / "saved_models" / "xgb_model.json"
+
+model = xgb.XGBClassifier()
+model.load_model(MODEL_PATH)
 
 
 def ask_ai(user_question, features):

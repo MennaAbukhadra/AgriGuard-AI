@@ -1,7 +1,6 @@
 import streamlit as st
 
-from front.utils.api import predict
-
+from utils.api import predict
 
 st.set_page_config(
     page_title="AgriGuard Prediction",

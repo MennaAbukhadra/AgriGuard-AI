@@ -3,6 +3,8 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
+from config import API_BASE_URL
+
 # =========================
 # Page Config
 # =========================
@@ -273,8 +275,7 @@ div[data-baseweb="input"] input {
 # =========================
 # Constants
 # =========================
-
-API_URL = "http://127.0.0.1:8010/dashboard"
+API_URL = f"{API_BASE_URL}/dashboard"
 
 risk_options = ["Low", "Medium", "High"]
 

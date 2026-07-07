@@ -1,5 +1,8 @@
 import requests
 
+from config import API_BASE_URL
+BASE_URL = API_BASE_URL
+
 def get_dashboard():
     try:
         response = requests.get(
@@ -50,14 +53,18 @@ def get_model_insights():
         return {"error": str(e)}
     
 
-
 def ask_ai(question, features):
-    response = requests.post(
-        f"{BASE_URL}/chat",
-        json={
-            "question": question,
-            "features": features
-        }
-    )
+    try:
+        response = requests.post(
+            f"{BASE_URL}/chat",
+            json={
+                "question": question,
+                "features": features
+            },
+            timeout=60
+        )
+        response.raise_for_status()
+        return response.json()
 
-    return response.json()
+    except requests.exceptions.RequestException as e:
+        return {"error": str(e)}

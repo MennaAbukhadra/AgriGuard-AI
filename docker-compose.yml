@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: agriguard-backend
+    ports:
+      - "8010:8010"
+    env_file:
+      - ./backend/.env
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: agriguard-frontend
+    ports:
+      - "8501:8501"
+    environment:
+      API_BASE_URL: http://backend:8010
+    depends_on:
+      - backend

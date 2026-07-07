@@ -3,13 +3,16 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
+from config import API_BASE_URL
+
 st.set_page_config(
     page_title="AgriGuard Grid Inspection",
     page_icon=None,
     layout="wide"
 )
 
-API_URL = "https://agriguard-api-hahqevhdc3eab3c8.uaenorth-01.azurewebsites.net/grid-inspection"
+
+API_URL = f"{API_BASE_URL}/grid-inspection"
 
 st.markdown("""
 <style>

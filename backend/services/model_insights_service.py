@@ -1,15 +1,16 @@
-import os
 import joblib
 import xgboost as xgb
+from pathlib import Path
 
-MODEL_DIR = "saved_models"
+BASE_DIR = Path(__file__).resolve().parents[1]
+
+MODEL_PATH = BASE_DIR / "saved_models" / "xgb_model.json"
+FEATURES_PATH = BASE_DIR / "saved_models" / "feature_names.pkl"
 
 model = xgb.XGBClassifier()
-model.load_model(os.path.join(MODEL_DIR, "xgb_model.json"))
+model.load_model(MODEL_PATH)
 
-feature_names = joblib.load(
-    os.path.join(MODEL_DIR, "feature_names.pkl")
-)
+feature_names = joblib.load(FEATURES_PATH)
 
 
 def get_model_insights():
@@ -20,7 +21,6 @@ def get_model_insights():
         feature_names,
         model.feature_importances_
     ):
-
         feature_importance.append({
             "feature": feature,
             "importance": round(float(importance), 4)
