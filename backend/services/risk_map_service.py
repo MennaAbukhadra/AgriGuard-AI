@@ -1,9 +1,7 @@
 import pandas as pd
 
 from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parents[1]
-RISK_MAP_PATH = BASE_DIR / "data" / "merged_for_mapping_final.csv"
+RISK_MAP_PATH = "https://agriguardai.blob.core.windows.net/data/merged_for_mapping_final.csv?sp=r&st=2026-07-07T20:51:25Z&se=2026-07-08T05:06:25Z&spr=https&sv=2026-02-06&sr=b&sig=8rtQpa6IUBJwHPvgHJxvPFxr3kG%2B4lbYfw2T8NbobE4%3D"
 def get_risk_map_data():
     print(RISK_MAP_PATH)
     df = pd.read_csv(RISK_MAP_PATH)
