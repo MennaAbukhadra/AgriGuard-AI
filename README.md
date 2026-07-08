@@ -61,22 +61,22 @@ The project follows an end-to-end machine learning workflow starting from data c
 ## Project Preview
 
 ### Executive Dashboard
-![Dashboard](docs/images/dashboard.png)
+![Dashboard](docs/images/dashboard.jpeg)
 
 ### Risk Map
-![Risk Map](docs/images/risk-map.png)
+![Risk Map](docs/images/risk-map.jpeg)
 
 ### Grid Inspection
-![Grid Inspection](docs/images/grid-inspection.png)
+![Grid Inspection](docs/images/grid-inspection.jpeg)
 
 ### Crop Stress Prediction
-![Prediction](docs/images/prediction.png)
+![Prediction](docs/images/prediction.jpeg)
 
 ### Model Insights
-![Model Insights](docs/images/model-insights.png)
+![Model Insights](docs/images/model-insights.jpeg)
 
 ### AI Assistant
-![AI Assistant](docs/images/ai-assistant.png)
+![AI Assistant](docs/images/ai-assistant.jpeg)
 
 ---
 
