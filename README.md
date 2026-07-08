@@ -1,249 +1,310 @@
-# AgriGuard
+# AgriGuard AI
 
-AgriGuard is an end-to-end machine learning system for early crop stress detection using satellite imagery, climate data, and explainable AI.
-
-The project predicts potential crop stress before visible symptoms appear, helping support proactive agricultural decision-making. It combines remote sensing data from Google Earth Engine, climate observations from NASA POWER, an XGBoost classification model, and an AI assistant that explains predictions in natural language. The system is delivered through an interactive Streamlit dashboard powered by a FastAPI backend. :contentReference[oaicite:0]{index=0}
+An end-to-end crop stress prediction platform that combines satellite imagery, climate observations, machine learning, and explainable AI to predict crop stress up to **15 days before visible symptoms appear**.
 
 ---
 
 ## Overview
 
-Traditional crop monitoring often detects problems only after damage has already occurred. AgriGuard addresses this challenge by continuously analyzing vegetation and climate indicators to estimate crop stress risk for each agricultural grid.
+AgriGuard is an intelligent crop monitoring system designed to support early agricultural decision-making through predictive analytics. The platform combines Sentinel-2 satellite imagery, NASA POWER climate observations, feature engineering, and an XGBoost model to estimate crop stress before visible symptoms appear.
 
-The study focuses on **Kafr El-Sheikh, Egypt**, where the agricultural area is divided into **1 km × 1 km grids**. For each grid, the system predicts the probability of crop stress and provides an explanation of the environmental factors that contributed to the prediction. :contentReference[oaicite:1]{index=1}
+The system includes a FastAPI backend, an interactive Streamlit dashboard, and an AI assistant that provides natural-language explanations for model predictions. The application is fully containerized using Docker and prepared for deployment on Microsoft Azure.
+
+---
+
+## Project Highlights
+
+| Item | Value |
+|------|-------|
+| Forecast Window | 15 Days |
+| Study Area | Kafr El-Sheikh, Egypt |
+| Observation Period | 2020–2024 |
+| Spatial Resolution | 1 km × 1 km |
+| Agricultural Grids | 2,828 |
+| Machine Learning Model | XGBoost |
+| Backend | FastAPI |
+| Frontend | Streamlit |
+| Deployment | Docker & Azure |
 
 ---
 
 ## Features
 
-- Executive dashboard for monitoring key indicators
-- Interactive crop stress risk map
-- Grid-level inspection
-- Crop stress prediction
-- Model insights and feature importance
-- AI assistant for explaining predictions
-- REST API built with FastAPI
-- Docker support for deployment
+| Feature | Description |
+|---------|-------------|
+| Crop Stress Prediction | Predict crop stress up to 15 days in advance |
+| Executive Dashboard | Visualize crop health and key performance indicators |
+| Risk Map | Explore crop stress across agricultural grids |
+| Grid Inspection | Analyze environmental variables for individual grids |
+| AI Assistant | Generate natural-language explanations for predictions |
+| REST API | Serve predictions through FastAPI |
+| Docker Support | Run the complete application using containers |
+| Azure Ready | Prepared for cloud deployment |
 
 ---
 
 ## System Architecture
 
-```
-
-Satellite Data (Google Earth Engine)
-+
-Climate Data (NASA POWER)
-↓
-Data Processing & Feature Engineering
-↓
-XGBoost Model
-↓
-FastAPI Backend
-↓
-Streamlit Dashboard
-↓
-Google Gemini AI Assistant
-
+```text
+ Sentinel-2 Imagery          NASA POWER API
+          │                        │
+          └────────────┬───────────┘
+                       │
+               Data Collection
+                       │
+               Data Preprocessing
+                       │
+              Feature Engineering
+                       │
+                  XGBoost Model
+                       │
+                 FastAPI Backend
+                ┌────────┴────────┐
+                │                 │
+         Streamlit Dashboard   AI Assistant
+                │
+                ▼
+              End User
 ```
 
 ---
 
-## Data Sources
+## Project Workflow
 
-The project combines multiple data sources:
+```text
+Satellite Data
+       +
+Climate Data
+       │
+       ▼
+Data Collection
+       │
+       ▼
+Preprocessing
+       │
+       ▼
+Feature Engineering
+       │
+       ▼
+Model Training
+       │
+       ▼
+Prediction API
+       │
+       ▼
+Dashboard & AI Assistant
+```
 
-- Sentinel-2 satellite imagery from Google Earth Engine
-- NASA POWER climate data
-- Vegetation indices including:
-  - NDVI
-  - NDWI
-  - EVI
-- Climate variables including:
-  - Temperature
-  - Rainfall
-  - Relative Humidity
-  - Wind Speed
+---
 
-The collected data covers agricultural grids in Kafr El-Sheikh from **2020 to 2024**. :contentReference[oaicite:2]{index=2}
+## Dataset
+
+The model was trained using satellite imagery and climate observations collected for agricultural areas in **Kafr El-Sheikh, Egypt**.
+
+| Property | Value |
+|----------|------:|
+| Observation Period | 2020–2024 |
+| Agricultural Grids | 2,828 |
+| Spatial Resolution | 1 km × 1 km |
+| Observations | 330K+ |
+| Engineered Features | 100+ |
+
+### Data Sources
+
+**Satellite Data**
+- Sentinel-2
+- NDVI
+- NDWI
+- EVI
+
+**Climate Data**
+- Temperature
+- Rainfall
+- Relative Humidity
+- Wind Speed
+- Solar Radiation
 
 ---
 
 ## Feature Engineering
 
-Several time-series and environmental features were engineered to improve predictive performance, including:
+Feature engineering is a core component of the project. Instead of relying only on raw environmental variables, the dataset was enriched with temporal and domain-specific features to improve predictive performance.
+
+Generated features include:
 
 - Rolling statistics
 - Lag features
-- Seasonal encoding
-- Cyclical date encoding
-- Vegetation trends
-- NDVI, NDWI, and EVI changes
+- Percentage change
+- Vegetation anomalies
+- Temperature anomalies
+- Rainfall accumulation
 - Vapor Pressure Deficit (VPD)
 - Evapotranspiration (ET)
 - Drought severity
-- Temperature anomalies
-- Composite agricultural risk score
+- Seasonal encoding
+- Cyclical time encoding
 
-Special care was taken to prevent data leakage by applying chronological processing and lag-based feature generation. :contentReference[oaicite:3]{index=3}
+All temporal features were generated chronologically for each agricultural grid to prevent data leakage and simulate real-world prediction scenarios.
 
 ---
 
 ## Machine Learning
 
-The final production model uses **XGBoost** for binary crop stress classification.
+Several machine learning algorithms were evaluated during development. **XGBoost** was selected as the final production model because it achieved the best balance between predictive performance, inference speed, and robustness on structured agricultural data.
 
-Model evaluation included:
+### Training Pipeline
 
-- Logistic Regression
-- Random Forest
-- XGBoost
-
-A time-based train/test split was used to preserve chronological order and simulate real deployment conditions. Hyperparameter optimization was performed using TimeSeriesSplit and RandomizedSearchCV. :contentReference[oaicite:4]{index=4}
+- Time-based train/test split
+- RandomizedSearchCV
+- TimeSeries Cross Validation
+- Threshold optimization
+- Explainability integration
 
 ### Performance
 
 | Metric | Value |
-|---------|-------|
-| ROC-AUC | **0.957** |
-| Precision | **0.53** |
-| Recall | **0.75** |
-| F1 Score | **0.62** |
+|---------|------:|
+| Model | XGBoost |
+| AUC-ROC | **0.957** |
+| Decision Threshold | **0.80** |
+| Validation Strategy | Time-Based Split |
 
 ---
 
 ## Explainable AI
 
-Predictions are accompanied by natural language explanations generated using **Google Gemini**.
+To improve model transparency, each prediction is accompanied by a natural-language explanation generated using Google Gemini.
 
-Instead of only displaying whether a grid is classified as healthy or stressed, the AI assistant explains the likely environmental causes behind the prediction, making the results easier to interpret for end users. :contentReference[oaicite:5]{index=5}
+The explanation summarizes:
+
+- Predicted crop condition
+- Stress probability
+- Environmental factors influencing the prediction
+- Recommended actions
+
+This enables users to understand **why** a prediction was generated instead of relying only on probability scores.
 
 ---
 
-## Technologies Used
+## Dashboard
 
-### Machine Learning
+The Streamlit dashboard provides multiple interactive views for monitoring crop conditions and exploring model predictions.
 
-- Python
-- Scikit-learn
-- XGBoost
-- Pandas
-- NumPy
+Modules include:
 
-### Backend
+- Executive Dashboard
+- Risk Map
+- Grid Inspection
+- Crop Stress Prediction
+- Model Insights
+- AI Assistant
 
-- FastAPI
-- Pydantic
+---
 
-### Frontend
+## Dockerization
 
-- Streamlit
-- Plotly
+The project was fully containerized using Docker to simplify deployment and ensure consistent execution across different environments.
 
-### AI
+Key improvements include:
 
-- Google Gemini API
+- Separation of Backend and Frontend services
+- Dedicated Dockerfiles
+- Docker Compose orchestration
+- Dynamic file paths using `pathlib`
+- Environment variables for API configuration
+- Internal Docker networking
 
-### Deployment
+Run the complete application using:
 
-- Docker
-- Docker Compose
+```bash
+docker compose build
+docker compose up
+```
+
+---
+
+## Azure Deployment
+
+The application was prepared for deployment using **Microsoft Azure Container Apps**.
+
+Deployment workflow:
+
+1. Verify local execution.
+2. Build Docker images.
+3. Configure environment variables.
+4. Deploy Backend and Frontend containers.
+5. Validate communication between services.
 
 ---
 
 ## Project Structure
 
-```
-
-AgriGuard
+```text
+AgriGuard-AI/
 │
 ├── backend/
-│   ├── services/
-│   ├── saved_models/
-│   ├── data/
-│   ├── main.py
-│   └── Dockerfile
-│
 ├── frontend/
-│   ├── pages/
-│   ├── utils/
-│   ├── app.py
-│   └── Dockerfile
-│
-├── docs/
+├── data/
 ├── notebooks/
-│
+├── saved_models/
+├── assets/
 ├── docker-compose.yml
 └── README.md
-
 ```
 
 ---
 
-## Running with Docker
-
-Clone the repository:
+## Installation
 
 ```bash
-git clone https://github.com/MennaAbukhadra/AgriGuard-AI.git
+git clone <repository-url>
 
 cd AgriGuard-AI
+
+python -m venv .venv
+
+pip install -r requirements.txt
+
+uvicorn backend.main:app --reload --port 8010
+
+streamlit run frontend/app.py
 ```
 
-Build the project:
+Or run using Docker:
 
 ```bash
 docker compose build
-```
-
-Run the application:
-
-```bash
 docker compose up
 ```
 
-Once running:
+---
 
-Frontend:
+## Technology Stack
 
-```
-http://localhost:8501
-```
-
-Backend:
-
-```
-http://localhost:8010/docs
-```
+| Category | Technologies |
+|----------|--------------|
+| Programming | Python |
+| Machine Learning | XGBoost, Scikit-learn |
+| Data Processing | Pandas, NumPy |
+| Backend | FastAPI |
+| Frontend | Streamlit |
+| Visualization | Plotly, Folium |
+| Remote Sensing | Google Earth Engine |
+| Climate Data | NASA POWER API |
+| Explainability | Google Gemini |
+| Deployment | Docker, Microsoft Azure |
+| Version Control | Git, GitHub |
 
 ---
 
-## API Endpoints
+## Acknowledgements
 
-| Endpoint | Description |
-|-----------|-------------|
-| `/dashboard` | Executive dashboard data |
-| `/risk-map` | Risk map data |
-| `/grid-inspection` | Grid inspection |
-| `/predict` | Crop stress prediction |
-| `/model-insights` | Model metrics and feature importance |
-| `/chat` | AI assistant |
+This project was developed as part of the **Digital Egypt Pioneers Initiative (DEPI)**.
+
+We would like to acknowledge the open-source tools and platforms that supported this work, including Google Earth Engine, NASA POWER API, FastAPI, Streamlit, XGBoost, Docker, Microsoft Azure, and Google Gemini.
 
 ---
 
-## Future Improvements
+## License
 
-Possible future enhancements include:
-
-- Real-time satellite updates
-- Multi-crop support
-- Additional governorates
-- Historical trend analysis
-- Mobile application
-- Automated cloud deployment
-
----
-
-## Acknowledgments
-
-This project was developed as part of the **Digital Egypt Pioneers Initiative (DEPI)** and combines machine learning, remote sensing, climate analytics, and explainable AI to support precision agriculture.
+This project was developed for educational and research purposes.
