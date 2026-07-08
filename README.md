@@ -75,7 +75,7 @@ The project follows an end-to-end machine learning workflow starting from data c
 ![Model Insights](docs/images/model-insights.jpeg)
 
 ### AI Assistant
-![AI Assistant](docs/images/ai-assistant.jpeg)
+![AI Assistant](docs/imagesai-assistant.jpeg.jpeg)
 ---
 
 ## Main Features
