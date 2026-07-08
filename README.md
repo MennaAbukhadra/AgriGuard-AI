@@ -57,27 +57,25 @@ AgriGuard provides an intelligent platform capable of:
 The project follows an end-to-end machine learning workflow starting from data collection and preprocessing through deployment and MLOps.
 
 ---
-
 ## Project Preview
 
 ### Executive Dashboard
 ![Dashboard](docs/images/dashboard.jpeg)
 
 ### Risk Map
-![Risk Map](docs/images/risk-map.jpeg)
+![Risk Map](docs/images/map.jpeg)
 
 ### Grid Inspection
 ![Grid Inspection](docs/images/grid-inspection.jpeg)
 
-### Crop Stress Prediction
-![Prediction](docs/images/prediction.jpeg)
+### Prediction
+![Prediction](docs/images/predict.jpeg)
 
 ### Model Insights
 ![Model Insights](docs/images/model-insights.jpeg)
 
 ### AI Assistant
 ![AI Assistant](docs/images/ai-assistant.jpeg)
-
 ---
 
 ## Main Features
