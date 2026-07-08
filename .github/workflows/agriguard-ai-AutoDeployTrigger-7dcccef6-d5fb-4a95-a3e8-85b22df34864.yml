@@ -1,0 +1,49 @@
+name: Trigger auto deployment for agriguard-ai
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/agriguard-ai-AutoDeployTrigger-7dcccef6-d5fb-4a95-a3e8-85b22df34864.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AGRIGUARDAI_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AGRIGUARDAI_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AGRIGUARDAI_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          _dockerfilePathKey_: _dockerfilePath_
+          _targetLabelKey_: _targetLabel_
+          registryUrl: agriguardai.azurecr.io
+          registryUsername: ${{ secrets.AGRIGUARDAI_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.AGRIGUARDAI_REGISTRY_PASSWORD }}
+          containerAppName: agriguard-ai
+          resourceGroup: AgriGuard_Ai
+          imageToBuild: agriguardai.azurecr.io/agriguard-ai:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
