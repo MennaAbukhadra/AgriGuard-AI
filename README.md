@@ -241,9 +241,3 @@ Possible future enhancements include:
 - Historical trend analysis
 - Mobile application
 - Automated cloud deployment
-
----
-
-## Acknowledgments
-
-This project was developed as part of the **Digital Egypt Pioneers Initiative (DEPI)** and combines machine learning, remote sensing, climate analytics, and explainable AI to support precision agriculture.
